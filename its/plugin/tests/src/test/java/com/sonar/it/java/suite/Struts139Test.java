@@ -63,7 +63,11 @@ public class Struts139Test {
     String fileKey = componentKey("org/apache/struts/action/", "Action.java");
     assertThat(getMeasureAsInteger(fileKey, "files")).isEqualTo(1);
     assertThat(getMeasureAsInteger(PROJECT_STRUTS, "lines")).isEqualTo(65059);
-    assertThat(getMeasureAsInteger(PROJECT_STRUTS, "ncloc")).isEqualTo(27577);
+    if (isGreaterThanOrEquals85()) {
+      assertThat(getMeasureAsInteger(PROJECT_STRUTS, "ncloc")).isEqualTo(33231);
+    } else {
+      assertThat(getMeasureAsInteger(PROJECT_STRUTS, "ncloc")).isEqualTo(27577);
+    }
     // 208 getter/setter
     assertThat(getMeasureAsInteger(PROJECT_STRUTS, "functions")).isEqualTo(2730 + 208);
 
@@ -106,6 +110,10 @@ public class Struts139Test {
 
   private static boolean isGreater75() {
     return orchestrator.getServer().version().isGreaterThanOrEquals(7, 6);
+  }
+
+  private static boolean isGreaterThanOrEquals85() {
+    return orchestrator.getServer().version().isGreaterThanOrEquals(8, 5);
   }
 
 }
